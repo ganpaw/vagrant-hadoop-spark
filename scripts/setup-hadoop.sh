@@ -24,6 +24,9 @@ function setupHadoop {
 	
 	echo "copying over hadoop configuration files"
 	cp -f $HADOOP_RES_DIR/* $HADOOP_CONF
+
+        hdfs --config $HADOOP_CONF_DIR namenode -format
+        hdfs --config $HADOOP_CONF_DIR datanode -format
 }
 
 function setupEnvVars {
@@ -38,6 +41,7 @@ function installHadoop {
 		installRemoteHadoop
 	fi
 	ln -s /usr/local/$HADOOP_VERSION /usr/local/hadoop
+        mkdir -p /usr/local/hadoop/logs
 }
 
 
@@ -45,3 +49,4 @@ echo "setup hadoop"
 installHadoop
 setupHadoop
 setupEnvVars
+
